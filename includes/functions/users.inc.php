@@ -127,12 +127,10 @@ class User extends CPHPDatabaseRecordClass {
 					if(User::SendActivationEmail($uEmailAddress, $uActivationCode) === true){
 		
 						// Create the user
-						$uSalt = User::GenerateSalt();
-						$uPasswordHash = GenerateHash($uPasswordOne, $uSalt);
 						$sUser = new User(0);
 						$sUser->uUsername = $uUsername;
-						$sUser->uPassword = $uPasswordHash;
-						$sUser->uSalt = $uSalt;
+						$sUser->uPassword = CreateHash($uPassword);
+						$sUser->uSalt = GenerateSalt();
 						$sUser->uEmailAddress = $uEmailAddress;
 						$sUser->uActivationCode = $uActivationCode;
 						$sUser->InsertIntoDatabase();
@@ -167,4 +165,3 @@ class User extends CPHPDatabaseRecordClass {
 		}
 	}
 }
-?>

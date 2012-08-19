@@ -167,4 +167,4 @@ class User extends CPHPDatabaseRecordClass {
 		}
 	}
 }
-
+?>

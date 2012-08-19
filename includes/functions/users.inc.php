@@ -15,6 +15,7 @@ class User extends CPHPDatabaseRecordClass {
 		'string' => array(
 			'Username' 	    => "username",
 			'Password'	    => "password",
+			'Salt'			=> "salt",
 			'EmailAddress'	    => "email",
 			'ActivationCode'    => "activation_code"
 		),
@@ -22,6 +23,37 @@ class User extends CPHPDatabaseRecordClass {
 			'Active' 	=> "active"
 		)
 	);
+	
+	public function GenerateSalt(){
+		$this->uSalt = random_string(10);
+	}
+	
+	public function GenerateHash(){
+		if(!empty($this->uSalt)){
+			if(!empty($this->uPassword)){
+				$this->uHash = $this->CreateHash($this->uPassword);
+			} else {
+				throw new MissingDataException("User object is missing a password.");
+			}
+		} else {
+			throw new MissingDataException("User object is missing a salt.");
+		}
+	}
+	
+	public function CreateHash($input){
+		global $cphp_config;
+		$hash = crypt($input, "$5\$rounds=50000\${$this->uSalt}{$cphp_config->settings->salt}$");
+		$parts = explode("$", $hash);
+		return $parts[4];
+	}
+	
+	public function VerifyPassword($password){
+		if($this->CreateHash($password) == $this->sHash){
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	// Function to check if a username is taken
 	public static function ValidateUsername($uUsername){
@@ -95,9 +127,12 @@ class User extends CPHPDatabaseRecordClass {
 					if(User::SendActivationEmail($uEmailAddress, $uActivationCode) === true){
 		
 						// Create the user
+						$uSalt = User::GenerateSalt();
+						$uPasswordHash = GenerateHash($uPasswordOne, $uSalt);
 						$sUser = new User(0);
 						$sUser->uUsername = $uUsername;
-						$sUser->uPassword = $uPassword;
+						$sUser->uPassword = $uPasswordHash;
+						$sUser->uSalt = $uSalt;
 						$sUser->uEmailAddress = $uEmailAddress;
 						$sUser->uActivationCode = $uActivationCode;
 						$sUser->InsertIntoDatabase();
@@ -115,6 +150,21 @@ class User extends CPHPDatabaseRecordClass {
 			return "The username you entered is already in use, please try a different username.";
 		} 
 		
+	}
+	
+	public static function login($uUsername, $uPassword){
+		global $database;
+		if($result = $database->CachedQuery("SELECT * FROM accounts WHERE (`email` = :Username || `username` = :Username)", array(
+		':Username' => $uUsername), 5)){
+			$sUser = new User($result);
+			if($sUser->VerifyPassword($uPassword)){
+				$_SESSION['user_id'] = $sUser->sId;
+				header("Location: member_home.php");
+				die();
+			} else {
+				return "Username or password was incorrect, please try again!";
+			}
+		}
 	}
 }
 

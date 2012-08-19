@@ -14,7 +14,7 @@ class User extends CPHPDatabaseRecordClass {
 	public $prototype = array(
 		'string' => array(
 			'Username' 	    => "username",
-			'Password'	    => "password",
+			'Hash'	            => "password",   /* Let's name this Hash and not Password - after all, it holds a hash. */
 			'Salt'			=> "salt",
 			'EmailAddress'	    => "email",
 			'ActivationCode'    => "activation_code"
@@ -129,8 +129,15 @@ class User extends CPHPDatabaseRecordClass {
 						// Create the user
 						$sUser = new User(0);
 						$sUser->uUsername = $uUsername;
-						$sUser->uPassword = CreateHash($uPassword);
-						$sUser->uSalt = GenerateSalt();
+						/* Below, we will set the user password. The uPassword variable is never saved into the database, it's
+						 * only used for the hashing functions. CPHP ignores it when you insert/update the object. */
+						$sUser->uPassword = $uPasswordOne;
+						/* The below function is a member of the User object, so you shouldn't call it as a global function. Also,
+						 * you shouldn't ever have to set the Hash manually, this is done already by the GenerateHash function. */
+						$sUser->GenerateSalt();
+						/* You can't create a hash until a Salt is set, and you should be using GenerateHash. CreateHash is only used
+						 * internally. Moved this to below the GenerateSalt function. */
+						$sUser->GenerateHash();
 						$sUser->uEmailAddress = $uEmailAddress;
 						$sUser->uActivationCode = $uActivationCode;
 						$sUser->InsertIntoDatabase();

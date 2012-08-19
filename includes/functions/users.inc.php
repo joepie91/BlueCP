@@ -93,20 +93,20 @@ class User extends CPHPDatabaseRecordClass {
 	
 	// Function takes the current timestamp and username to generate an auth code.
 	public static function GenerateAuthorizationCode(){
-		$uActivationCode = random_string(25);
-		return $uActivationCode;
+		$this->uActivationCode = random_string(25);
+		/* We don't need to return anything here. It stores stuff in the object itself. */
 	}
 	
 	// Function sends a welcome email with an activation link
-	public static function SendActivationEmail($uEmailAddress, $uActivationCode){
+	public function SendActivationEmail(){
 		$uEmailSubject = "BytePlan Activation Email";
 		$uEmailContent = '<div align="center">
 			BytePlan Activation<br><hr>
-			<a href="http://byteplan.com/activate.php?id='.$uActivationCode.'" target="_blank">Click Here To Activate Your Account</a>
+			<a href="http://byteplan.com/activate.php?id='.$this->uActivationCode.'" target="_blank">Click Here To Activate Your Account</a>
 			</div>';
 		$uEmailHeaders  = "From: noreply@byteplan.com\r\n";
 		$uEmailHeaders .= "Content-type: text/html\r\n"; 
-		if (mail($uEmailAddress, $uEmailSubject, $uEmailContent, $uEmailHeaders)) {
+		if (mail($this->uEmailAddress, $uEmailSubject, $uEmailContent, $uEmailHeaders)) {
 			return true;
 		} else {
 			return false;
@@ -120,14 +120,18 @@ class User extends CPHPDatabaseRecordClass {
 			if(User::ValidatePasswords($uPasswordOne, $uPasswordTwo) === true){
 				if(User::ValidateEmail($uEmailAddress) === true){
 		
+				/* We generate the user here, because we are going to need it for the authorization code and email sending. 
+				 * That the user isn't activated yet doesn't matter - it's still a user. */
+				// Create the user
+				$sUser = new User(0);
+				
+				/* We don't need to store this activation code manually, since the user object holds it after the changes in the
+				 * GenerateAuthorizationCode function. */
 				// Generate the activation code
-				$uActivationCode = User::GenerateAuthorizationCode();
+				User->GenerateAuthorizationCode();
 		
 				// Send Email
-					if(User::SendActivationEmail($uEmailAddress, $uActivationCode) === true){
-		
-						// Create the user
-						$sUser = new User(0);
+					if(User->SendActivationEmail() === true){
 						$sUser->uUsername = $uUsername;
 						/* Below, we will set the user password. The uPassword variable is never saved into the database, it's
 						 * only used for the hashing functions. CPHP ignores it when you insert/update the object. */

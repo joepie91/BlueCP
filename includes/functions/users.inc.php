@@ -128,10 +128,10 @@ class User extends CPHPDatabaseRecordClass {
 				/* We don't need to store this activation code manually, since the user object holds it after the changes in the
 				 * GenerateAuthorizationCode function. */
 				// Generate the activation code
-				User->GenerateAuthorizationCode();
+				$sUser->GenerateAuthorizationCode();
 		
 				// Send Email
-					if(User->SendActivationEmail() === true){
+					if($sUser->SendActivationEmail() === true){
 						$sUser->uUsername = $uUsername;
 						/* Below, we will set the user password. The uPassword variable is never saved into the database, it's
 						 * only used for the hashing functions. CPHP ignores it when you insert/update the object. */

@@ -65,7 +65,7 @@ class User extends CPHPDatabaseRecordClass {
 	public static function ValidatePasswords($uPasswordOne, $uPasswordTwo){
 		if($uPasswordOne == $uPasswordTwo){
 			if(strlen($uPasswordOne) > 4){
-			return true;
+				return true;
 			}
 		}
 		return false;

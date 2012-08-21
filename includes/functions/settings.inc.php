@@ -10,9 +10,9 @@ class Setting extends CPHPDatabaseRecordClass {
 	
 	public $prototype = array(
 		'string' => array(
-			'SettingName' 	    => "setting_name",
-			'SettingValue'	    => "setting_value",
-			'SettingGroup'			=> "setting_group"
+			'Name'		=> "setting_name",
+			'Value'		=> "setting_value",
+			'Group'		=> "setting_group"
 		)
 	);
 }

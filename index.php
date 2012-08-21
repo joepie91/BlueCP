@@ -5,8 +5,8 @@ include('./includes/loader.php');
 		header("Location: member_home.php");
 	} else {
 
-		if($id == 'login'){
-		$error_message = User::login($uUsername, $uPassword);
+		if($_GET['id'] == 'login'){
+		$error_message = User::login($_GET['username'], $_GET['password']); /* You really shouldn't be using GET for this.. */
 		}
 		echo Templater::AdvancedParse('/blue_default/index', $locale->strings, array(
 		'LoggedIn' => $LoggedIn,

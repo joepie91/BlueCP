@@ -10,8 +10,7 @@ include('./includes/loader.php');
 		}
 		echo Templater::AdvancedParse('/blue_default/index', $locale->strings, array(
 		'LoggedIn' => $LoggedIn,
-		'PageTitle'  => 'BlueCP Login',
-		'TemplatePath'	=>	'./templates/blue_default'
+		'PageTitle'  => 'BlueCP Login'
 		));
 	}
 ?>

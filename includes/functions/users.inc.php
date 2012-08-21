@@ -108,10 +108,9 @@ class User extends CPHPDatabaseRecordClass {
 		if(User::ValidateUsername($uUsername) === true){
 			if(User::ValidatePasswords($uPasswordOne, $uPasswordTwo) === true){
 				if(User::ValidateEmail($uEmailAddress) === true){
-		
-				$sUser = new User(0);
-				
-				$sUser->GenerateAuthorizationCode();
+					$sUser = new User(0);
+					
+					$sUser->GenerateAuthorizationCode();
 		
 					if($sUser->SendActivationEmail() === true){
 						$sUser->uUsername = $uUsername;

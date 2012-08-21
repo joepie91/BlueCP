@@ -121,6 +121,7 @@ class User extends CPHPDatabaseRecordClass {
 						$sUser->uActivationCode = $uActivationCode;
 						$sUser->InsertIntoDatabase();
 						header("Location: register.php?id=activate");
+						die();
 					} else {
 						return "An error occured while attempting to send you an activation email. Please contact us at admin@byteplan.com";
 					}

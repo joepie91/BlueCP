@@ -1,7 +1,7 @@
 <?php
 
 // Defines the class as Settings
-class Settings extends CPHPDatabaseRecordClass {
+class Setting extends CPHPDatabaseRecordClass {
 
 	// Select and load the settings table
 	public $table_name = "settings";

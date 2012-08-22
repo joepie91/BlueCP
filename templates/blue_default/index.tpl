@@ -3,42 +3,42 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{%?PageTitle}</title>
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/reset.css" /> 
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/root.css" /> 
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/grid.css" /> 
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/typography.css" /> 
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/jquery-plugin-base.css" />
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/reset.css" /> 
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/root.css" /> 
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/grid.css" /> 
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/typography.css" /> 
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/jquery-plugin-base.css" />
 	
-    <!--[if IE 7]>	  <link rel="stylesheet" type="text/css" href="{%?TemplatePath}/style/ie7-style.css" />	<![endif]-->
+    <!--[if IE 7]>	  <link rel="stylesheet" type="text/css" href="templates/blue_default/style/ie7-style.css" />	<![endif]-->
 
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.min.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery-ui-1.8.11.custom.min.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery-settings.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/toogle.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.tipsy.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.uniform.min.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.wysiwyg.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.tablesorter.min.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/raphael.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/analytics.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/popup.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/fullcalendar.min.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.prettyPhoto.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.core.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.mouse.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.widget.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.slider.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.datepicker.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.tabs.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.ui.accordion.js"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/https://www.google.com/jsapi"></script>
-	<script type="text/javascript" src="{%?TemplatePath}/js/jquery.dataTables.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.min.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery-ui-1.8.11.custom.min.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery-settings.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/toogle.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.tipsy.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.uniform.min.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.wysiwyg.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.tablesorter.min.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/raphael.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/analytics.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/popup.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/fullcalendar.min.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.prettyPhoto.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.core.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.mouse.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.widget.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.slider.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.datepicker.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.tabs.js"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.ui.accordion.js"></script>
+	<script type="text/javascript" src="templates/blue_default/https://www.google.com/jsapi"></script>
+	<script type="text/javascript" src="templates/blue_default/js/jquery.dataTables.js"></script>
 </head>
 <body>
 	
     <div class="loginform">
-    	<div class="title"> <img src="{%?TemplatePath}/img/logo.png" width="112" height="35" /></div>
+    	<div class="title"> <img src="templates/blue_default/img/logo.png" width="112" height="35" /></div>
         <div class="body">
        	  <form id="form1" name="form1" method="post" action="index.php?id=login">
           	<label class="log-lab">Username/Email</label>

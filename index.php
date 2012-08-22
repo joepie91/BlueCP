@@ -6,7 +6,7 @@ include('./includes/loader.php');
 	} else {
 
 		if($_GET['id'] == 'login'){
-		$error_message = User::login($_GET['username'], $_GET['password']); /* You really shouldn't be using GET for this.. */
+		$error_message = User::login($_POST['username'], $_POST['password']); /* I wasn't using GET for this I just made a mistake. The HTML was POST... */
 		}
 		echo Templater::AdvancedParse('/blue_default/index', $locale->strings, array(
 		'LoggedIn' => $LoggedIn,

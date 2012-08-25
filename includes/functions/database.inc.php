@@ -24,10 +24,8 @@ class Database {
         $result = mysql_query($query, $this->_connection);
         $tmpId  = mysql_insert_id($this->_connection);
 
-        if(isset($this->connection)){
-		mysql_close($this->connection);
-        }
-		
+        mysql_close($this->connection);
+        
         if ($getId) {
             return $tmpId;
         }

@@ -4,33 +4,3 @@ BLUECP README UPDATED: AUG 2012
 BlueCP is a project which is still
 in development and as such the code
 in here is probably crap.
-
-================================
-General Notes Because I Forget:
-================================
-Create instance of Database to work with
-$database = new Database('localhost', 'mydatabase', 'root', '123456');
-
-Get all entries of a table
-$allUsers = $database->select('example');
-
-Example advanced query for searching
-$usersBeginningWithLetterA = $database->select('example', '*', 'username LIKE \'%A%\'');
-
-Insert new user to table user and get ID of row inserted
-$userData = array(
-    'username' => 'Max',
-    'password' => 'as7d89',
-); // Yes this is bad, its just an example
-
-$userId = $database->insert('accounts', $userData);
-echo $userId;
-
-Update, e.g. to change users password
-$database->update('accounts', array('password' => 'as7d999'), 'username = \'Max\'');
-
-Delete user
-$database->delete('user', $userId);
-
-Truncate table (delete all rows in table and set index back)
-$database->truncate('cache');

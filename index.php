@@ -1,13 +1,16 @@
 <?php
 include('./includes/loader.php');
 
-$settings = new Settings;
-$template = "./templates/".$settings->LoadSetting('template')."/".$_SERVER['PHP_SELF'];
+	if($LoggedIn === true){
+		header("Location: member_home.php");
+	} else {
 
-if(isset($_GET['id'])){
-	if($_GET['id'] == 'login'){
-	
+		if($_GET['id'] == 'login'){
+		$error_message = User::login($_POST['username'], $_POST['password']); /* I wasn't using GET for this I just made a mistake. The HTML was POST... */
+		}
+		echo Templater::AdvancedParse('/blue_default/index', $locale->strings, array(
+		'LoggedIn' => $LoggedIn,
+		'PageTitle'  => 'BlueCP Login'
+		));
 	}
-}
-echo LoadTemplate($template, $vars = array());
 ?>

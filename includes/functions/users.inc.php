@@ -149,7 +149,7 @@ class User extends CPHPDatabaseRecordClass {
 			$sUser = new User($result);
 			if($sUser->VerifyPassword($uPassword)){
 				$_SESSION['user_id'] = $sUser->sId;
-				header("Location: member_home.php");
+				header("Location: main.php");
 				die();
 			} else {
 				return false;

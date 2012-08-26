@@ -2,16 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>{%?PageTitle}</title>
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/reset.css" /> 
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/root.css" /> 
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/grid.css" /> 
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/typography.css" /> 
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/jquery-ui.css" />
-    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/jquery-plugin-base.css" />
-	
+<title>{%?PageTitle} - Register</title>
+    <link rel="stylesheet" type="text/css" href="templates/blue_default/style/base.css" /> 
     <!--[if IE 7]>	  <link rel="stylesheet" type="text/css" href="templates/blue_default/style/ie7-style.css" />	<![endif]-->
-
 	<script type="text/javascript" src="templates/blue_default/js/jquery.min.js"></script>
 	<script type="text/javascript" src="templates/blue_default/js/jquery-ui-1.8.11.custom.min.js"></script>
 	<script type="text/javascript" src="templates/blue_default/js/jquery-settings.js"></script>
@@ -39,13 +32,22 @@
 	
     <div class="loginform">
     	<div class="title"> <img src="templates/blue_default/img/logo.png" width="112" height="35" /></div>
-        <div class="body">
-       	  <form id="form1" name="form1" method="post" action="index.php?id=login">
-          	<label class="log-lab">Username/Email</label>
+		 <div class="body">
+		{%if isempty|ErrorMessage == false}
+			<div style="z-index: 670;" class="albox errorbox">
+			{%?ErrorMessage}
+			<a original-title="close" href="#" class="close tips">close</a></div>
+		{%/if}<br><div align="center"><strong>BlueCP Registration</strong></div><br>
+		<form id="form1" name="form1" method="post" action="register.php?id=register">
+          	<label class="log-lab">Username</label>
             <input name="username" type="text" class="login-input-user" id="textfield" value=""/>
+			<label class="log-lab">Email Address</label>
+            <input name="email" type="text" class="login-input-user" id="textfield" value=""/>
           	<label class="log-lab">Password</label>
-            <input name="password" type="password" class="login-input-pass" id="textfield" value=""/>
-            <input type="submit" name="button" id="button" value="Login" class="button"/>
+            <input name="passwordone" type="password" class="login-input-pass" id="textfield" value=""/>
+			<label class="log-lab">Password (Again)</label>
+            <input name="passwordtwo" type="password" class="login-input-pass" id="textfield" value=""/>
+            <input type="submit" name="button" id="button" value="Register" class="button"/>
        	  </form>
         </div>
     </div>

@@ -12,9 +12,10 @@ class User extends CPHPDatabaseRecordClass {
 		'string' => array(
 			'Username' 	    => "username",
 			'Hash'	            => "password",
-			'Salt'			=> "salt",
+			'Salt'			=>	"salt",
 			'EmailAddress'	    => "email",
-			'ActivationCode'    => "activation_code"
+			'ActivationCode'    => "activation_code",
+			'Plan'		=>	"plan"
 		),
 		'boolean' => array(
 			'Active' 	=> "active"
@@ -53,8 +54,9 @@ class User extends CPHPDatabaseRecordClass {
 	}
 	
 	public static function ValidateUsername($uUsername){
-		if($result = $database->CachedQuery("SELECT COUNT(*) FROM users WHERE `username` = :Username", array(':Username' => $uUsername))){
-			if($result->data['COUNT(*)'] > 0){
+		global $database;
+		if($result = $database->CachedQuery("SELECT COUNT(*) FROM accounts WHERE `username` = :Username", array(':Username' => $uUsername), 1)){
+			if($result->data[0]['COUNT(*)'] > 0){
 	               		return false;
 			} else {
 				return true;
@@ -72,9 +74,10 @@ class User extends CPHPDatabaseRecordClass {
 	}
 	
 	public static function ValidateEmail($uEmailAddress){
+		global $database;
 		if(filter_var($uEmailAddress, FILTER_VALIDATE_EMAIL)) {
-			if($result = $database->CachedQuery("SELECT COUNT(*) FROM users WHERE `email` = :Email", array(':Email' => $uEmailAddress))){
-				if($result->data['COUNT(*)'] > 0){
+			if($result = $database->CachedQuery("SELECT COUNT(*) FROM accounts WHERE `email` = :Email", array(':Email' => $uEmailAddress), 1)){
+				if($result->data[0]['COUNT(*)'] > 0){
 	               			return false;
 				} else {
 					return true;
@@ -85,19 +88,21 @@ class User extends CPHPDatabaseRecordClass {
 		}
 	}
 	
-	public static function GenerateAuthorizationCode(){
+	public function GenerateAuthorizationCode(){
 		$this->uActivationCode = random_string(25);
 	}
 	
-	public function SendActivationEmail(){
-		$uEmailSubject = "BytePlan Activation Email";
+	public function SendActivationEmail($uEmailAddress){
+	$sPanelTitle = Core::GetSetting('panel_title');
+		$uEmailSubject = $sPanelTitle->sValue." Activation Email";
 		$uEmailContent = '<div align="center">
 			BytePlan Activation<br><hr>
 			<a href="http://byteplan.com/activate.php?id='.$this->uActivationCode.'" target="_blank">Click Here To Activate Your Account</a>
 			</div>';
 		$uEmailHeaders  = "From: noreply@byteplan.com\r\n";
-		$uEmailHeaders .= "Content-type: text/html\r\n"; 
-		if (mail($this->uEmailAddress, $uEmailSubject, $uEmailContent, $uEmailHeaders)) {
+		$uEmailHeaders .= "Content-type: text/html\r\n";
+		return true; // This is temporary for testing until I have a way to send mail.
+		if (mail($uEmailAddress, $uEmailSubject, $uEmailContent, $uEmailHeaders)) {
 			return true;
 		} else {
 			return false;
@@ -105,20 +110,20 @@ class User extends CPHPDatabaseRecordClass {
 	}
 	
 	public static function register($uUsername, $uPasswordOne, $uPasswordTwo, $uEmailAddress){
+		global $database;
 		if(User::ValidateUsername($uUsername) === true){
 			if(User::ValidatePasswords($uPasswordOne, $uPasswordTwo) === true){
 				if(User::ValidateEmail($uEmailAddress) === true){
 					$sUser = new User(0);
 					
 					$sUser->GenerateAuthorizationCode();
-		
-					if($sUser->SendActivationEmail() === true){
+					if($sUser->SendActivationEmail($uEmailAddress) === true){
 						$sUser->uUsername = $uUsername;
 						$sUser->uPassword = $uPasswordOne;
 						$sUser->GenerateSalt();
 						$sUser->GenerateHash();
 						$sUser->uEmailAddress = $uEmailAddress;
-						$sUser->uActivationCode = $uActivationCode;
+						pretty_dump($sUser);
 						$sUser->InsertIntoDatabase();
 						header("Location: register.php?id=activate");
 						die();
@@ -147,7 +152,7 @@ class User extends CPHPDatabaseRecordClass {
 				header("Location: member_home.php");
 				die();
 			} else {
-				return "Username or password was incorrect, please try again!";
+				return false;
 			}
 		}
 	}

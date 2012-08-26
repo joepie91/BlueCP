@@ -92,7 +92,7 @@ function mc_delete($key)
 
 function mysql_query_cached($query, $expiry = 60, $key = "")
 {
-	global $database;
+	global $cphp_config, $database;
 	
 	if($key == "")
 	{
@@ -138,7 +138,7 @@ function mysql_query_cached($query, $expiry = 60, $key = "")
 		else
 		{
 			/* Transparently use PDO to run the query. */
-			if($res = $database->Query($query))
+			if($statement = $database->Query($query))
 			{
 				if($data = $statement->fetchAll(PDO::FETCH_ASSOC))
 				{

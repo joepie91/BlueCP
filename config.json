@@ -1,0 +1,30 @@
+{
+  "database": {
+    "driver":   "mysql",
+    "hostname":   "localhost",
+    "username":   "root",
+    "password":   "",
+    "database":   "data",
+    "pdo":        true
+  },
+  "locale": {
+    "path":     "templates/languages",
+    "extension":    "lng",
+    "default_locale":   "english",
+    "default_timezone":   "Europe/Amsterdam"
+  },
+  "memcache": {
+    "enabled":   false
+  },
+  "class_map": {
+  
+  },
+  "settings": {
+  "salt":	"a3a471",
+  "defaulttemplate":    "blue_default"
+  },
+  "components": [
+    "router",
+    "errorhandler"
+  ]
+}

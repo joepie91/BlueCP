@@ -123,7 +123,6 @@ class User extends CPHPDatabaseRecordClass {
 						$sUser->GenerateSalt();
 						$sUser->GenerateHash();
 						$sUser->uEmailAddress = $uEmailAddress;
-						pretty_dump($sUser);
 						$sUser->InsertIntoDatabase();
 						header("Location: register.php?id=activate");
 						die();
@@ -131,7 +130,7 @@ class User extends CPHPDatabaseRecordClass {
 						return "An error occured while attempting to send you an activation email. Please contact us at admin@byteplan.com";
 					}
 				} else {
-					return "The email address you entered was invalid please try again!";
+					return "The email address you entered was either in use or invalid!";
 				}
 			} else {
 				return "Your passwords must match and must be at least 5 characters in length.";
@@ -144,8 +143,8 @@ class User extends CPHPDatabaseRecordClass {
 	
 	public static function login($uUsername, $uPassword){
 		global $database;
-		if($result = $database->CachedQuery("SELECT * FROM accounts WHERE (`email` = :Username || `username` = :Username)", array(
-		':Username' => $uUsername), 5)){
+		if($result = $database->CachedQuery("SELECT * FROM accounts WHERE (`email` = :Username || `username` = :Username) && `active` = :Active", array(
+		':Username' => $uUsername, ':Active' => '1'), 5)){
 			$sUser = new User($result);
 			if($sUser->VerifyPassword($uPassword)){
 				$_SESSION['user_id'] = $sUser->sId;

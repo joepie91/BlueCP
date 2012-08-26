@@ -5,7 +5,7 @@ $sPanelTitle = Core::GetSetting('panel_title');
 $sRegistrationEnabled = Core::GetSetting('registration_enabled');
 $sForgotPasswordEnabled = Core::GetSetting('forgotpassword_enabled');
 	if($LoggedIn === true){
-		header("Location: member_home.php");
+		header("Location: main.php");
 		die();
 	} else {
 		if(!empty($_GET['id'])){

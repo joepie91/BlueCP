@@ -4,35 +4,50 @@ include('./includes/loader.php');
 $sPanelTitle = Core::GetSetting('panel_title');
 $sRegistrationEnabled = Core::GetSetting('registration_enabled');
 $sForgotPasswordEnabled = Core::GetSetting('forgotpassword_enabled');
-	if($LoggedIn === true){
-		header("Location: main.php");
-		die();
-	} else {
-		if(!empty($_GET['id'])){
-			if($_GET['id'] == 'login'){
-				if((!empty($_POST['username'])) && (!empty($_POST['password']))){
-					$sErrorMessage = User::login($_POST['username'], $_POST['password']); /* I wasn't using GET for this I just made a mistake. The HTML was POST... */
-					if($sErrorMessage == NULL){ $sErrorMessage = "Username or Password Incorrect!"; }
-				} else {
-					$sErrorMessage = "Invalid Username or Password!";
-				}
-			} else { die("Error: Invalid variable value in variable id"); }
-		
-				echo Templater::AdvancedParse('/blue_default/login', $locale->strings, array(
-				'LoggedIn' => $LoggedIn,
-				'PageTitle'  => $sPanelTitle->sValue,
-				'ErrorMessage'	=>	$sErrorMessage,
-				'RegistrationEnabled'	=> $sRegistrationEnabled->sValue,
-				'ForgotPasswordEnabled'	=> $sForgotPasswordEnabled->sValue
-				));
-		} else {
-				echo Templater::AdvancedParse('/blue_default/login', $locale->strings, array(
-				'LoggedIn' => $LoggedIn,
-				'PageTitle'  => $sPanelTitle->sValue,
-				'ErrorMessage'	=>	"",
-				'RegistrationEnabled'	=> $sRegistrationEnabled->sValue,
-				'ForgotPasswordEnabled'	=> $sForgotPasswordEnabled->sValue
-				));
+
+if($LoggedIn === true)
+{
+	header("Location: main.php");
+	die();
+} 
+else 
+{
+	if(empty($_GET['id']) || $_GET['id'] == 'login')
+	{
+		if(isset($_POST['submit']))
+		{
+			/* Form was submitted. */
+			if((!empty($_POST['username'])) && (!empty($_POST['password'])))
+			{
+				$sErrorMessage = User::login($_POST['username'], $_POST['password']);
+			} 
+			else 
+			{
+				$sErrorMessage = "Username or password not specified.";
+			}
 		}
+		else
+		{
+			$sErrorMessage = "";
+		}
+		
+		$sPageContents = Templater::AdvancedParse('/blue_default/login', $locale->strings, array(
+			'ErrorMessage'		=> $sErrorMessage,
+			'RegistrationEnabled'	=> $sRegistrationEnabled->sValue,
+			'ForgotPasswordEnabled'	=> $sForgotPasswordEnabled->sValue
+		));
 	}
+	else
+	{
+		/* TODO: create a proper template for this. */
+		$sPageContents = "Page not found";
+		$sPageTitle = "Not found";
+	}
+	
+	echo(Templater::AdvancedParse('blue_default/master.login', $locale->strings, array(
+		'PanelTitle'	=> $sPanelTitle->sValue,
+		'PageTitle'	=> "Login",
+		'contents'	=> $sPageContents
+	)));
+}
 ?>

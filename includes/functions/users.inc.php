@@ -151,8 +151,12 @@ class User extends CPHPDatabaseRecordClass {
 				header("Location: main.php");
 				die();
 			} else {
-				return false;
+				return "Invalid password.";
 			}
+		}
+		else
+		{
+			return "Invalid username.";
 		}
 	}
 }
